@@ -81,7 +81,7 @@ def play():
             else:
                 Board.PrintBoard()
                 print("CPU Move")
-                minimax(Board,cpuval)          ##change this
+                ab_decision(Board,cpuval)          ##change this
                 Board.PrintBoard()
 
     Board.PrintBoard()
@@ -141,6 +141,7 @@ def minimax(board,cpVal):
     else:
         move,score = minMove(board)
     board.play_square(move[0],move[1],cpVal)
+
 def maxMove(board):
     bestScore =None
     bestMove= None
@@ -185,8 +186,69 @@ def minMove(board):
             bestMove = square
     return bestMove,bestScore
 
+def ab_decision(board, cpVal):
+    if cpVal == "X":
+        move,score = ab_max(board, -100, 100)
+    else:
+        move,score = ab_min(board, -100, 100)
+    board.play_square(move[0],move[1],cpVal)
+
+def ab_max(board, a, b):
+    bestScore =None
+    bestMove= None
+    freeSquares = board.get_empty_squares()
+    for square in freeSquares:
+        board.play_square(square[0],square[1],"X")
+        if board.full_board() and board.winner()=='N':
+            score= 0
+        elif board.winner()=="X":
+            score= 1
+        elif board.winner()=="O":
+            score= -1
+        else:
+            move_pos,score = ab_min(board, a, b)
+        
+        board.play_square(square[0],square[1],"N")
+
+        if bestScore == None or score > bestScore:
+            bestScore = score
+            bestMove = square
+
+        if bestScore >= b:
+                return bestMove,bestScore
+        a = max(a, bestScore)
+
+    return bestMove,bestScore
+
+def ab_min(board, a, b):
+    bestScore =None
+    bestMove= None
+    freeSquares = board.get_empty_squares()
+    for square in freeSquares:
+        board.play_square(square[0],square[1],"X")
+        if board.full_board() and board.winner()=='N':
+            score= 0
+        elif board.winner()=="X":
+            score= 1
+        elif board.winner()=="O":
+            score= -1
+        else:
+            move_pos,score = ab_max(board, a, b)
+        
+        board.play_square(square[0],square[1],"N")
+
+        if bestScore == None or score < bestScore:
+            bestScore = score
+            bestMove = square
+
+        if bestScore <= a:
+                return bestMove,bestScore
+        b = min(b, bestScore)
+
+    return bestMove,bestScore
+
 def main():
-    playAsO()
+    play()
 
 main()
             
