@@ -4,14 +4,14 @@ class TicTacToeBoard:
 
     def __init__(self):
         self.board = (['N']*3,['N']*3,['N']*3)
-                                      
+
     def PrintBoard(self):
         print(self.board[0][0] + "|" + self.board[1][0] + "|" + self.board[2][0])
         
         print(self.board[0][1] + "|" + self.board[1][1] + "|" + self.board[2][1])
         
         print(self.board[0][2] + "|" + self.board[1][2] + "|" + self.board[2][2])
-    
+
     def get_empty_squares(self):
         emptySquares = []
         for i in range(3):
@@ -32,7 +32,7 @@ class TicTacToeBoard:
                 if(self.board[i][j]=='N'):
                     return False
         return True
-    
+
     #if there is a winner this will return their symbol (either 'X' or 'O'),
     #otherwise it will return 'N'
     def winner(self):
@@ -134,7 +134,6 @@ def playAsO():
     elif(Board.winner()==cpuval):
         print("CPU Wins!")
 
-
 def minimax(board,cpVal):
     if cpVal == "X":
         move,score = maxMove(board)
@@ -188,9 +187,9 @@ def minMove(board):
 
 def ab_decision(board, cpVal):
     if cpVal == "X":
-        move,score = ab_max(board, -100, 100)
+        move,score = ab_max(board, float("-inf"), float("inf"))
     else:
-        move,score = ab_min(board, -100, 100)
+        move,score = ab_min(board, float("-inf"), float("inf"))
     board.play_square(move[0],move[1],cpVal)
 
 def ab_max(board, a, b):
@@ -251,4 +250,3 @@ def main():
     play()
 
 main()
-            
