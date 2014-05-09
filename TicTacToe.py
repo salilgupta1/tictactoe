@@ -100,7 +100,7 @@ def playAsO():
     print("\n")
 
     while( Board.full_board()==False and Board.winner() == 'N'):
-        minimax(Board,cpuval)              ### change this
+        ab_decision(Board,cpuval)              ### change this
         if(Board.full_board() or Board.winner()!='N'):
             break
 
@@ -214,7 +214,7 @@ def ab_max(board, a, b):
             bestMove = square
 
         if bestScore >= b:
-                return bestMove,bestScore
+            return bestMove,bestScore
         a = max(a, bestScore)
 
     return bestMove,bestScore
@@ -224,7 +224,7 @@ def ab_min(board, a, b):
     bestMove= None
     freeSquares = board.get_empty_squares()
     for square in freeSquares:
-        board.play_square(square[0],square[1],"X")
+        board.play_square(square[0],square[1],"O")
         if board.full_board() and board.winner()=='N':
             score= 0
         elif board.winner()=="X":
